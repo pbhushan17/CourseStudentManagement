@@ -1,0 +1,81 @@
+﻿@model IPagedList<CourseStudentManagement.Models.student>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using PagedList.Mvc;
+@using PagedList;
+<p>
+   @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+   { 
+     <input type="text" name="search" placeholder="Enter Student Name..." />
+     <input type="submit" name="submit" value="Search"/>
+   }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().dateofbirth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().address1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().address2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().address3)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model.Count() == 0)
+    { 
+     <h2>No Records Found.</h2>
+    }
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateofbirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address3)
+            </td>
+            <!--<td>-->
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+            <!--</td>-->
+        </tr>
+    }
+
+</table>
+
+@Html.PagedListPager(Model,i => Url.Action("Index", "Home", new { i, search = Request.QueryString["search"] }))
+
